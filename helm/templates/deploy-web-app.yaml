@@ -25,3 +25,12 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: role
+                operator: In
+                values:
+                - demo-worker
