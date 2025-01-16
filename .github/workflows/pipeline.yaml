@@ -9,8 +9,18 @@ on:
       - main
 
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  build-push:
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.9
+
+  docker-build-and-push:
     needs: build-and-test
     runs-on: ubuntu-latest
     steps:
