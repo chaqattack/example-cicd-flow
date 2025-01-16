@@ -57,7 +57,7 @@ jobs:
       
       - name: eks-kubeconfig
         run: |
-          aws eks update-kubeconfig --region us-east-1 --name ai-svc-dev
+          aws eks update-kubeconfig --region us-east-1 --name demo-cluster
       
 
       
