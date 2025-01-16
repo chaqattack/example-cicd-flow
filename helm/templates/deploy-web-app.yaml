@@ -19,9 +19,9 @@ spec:
     spec:
       serviceAccountName: default
       containers:
-        image: "279787105960.dkr.ecr.us-east-1.amazonaws.com/my-python-app-repository:latest"
+      - name: web-deployment
+        image: 279787105960.dkr.ecr.us-east-1.amazonaws.com/my-python-app-repository:latest
         imagePullPolicy: Always
-        name: web-deployment
         ports:
         - containerPort: 8080
           protocol: TCP
