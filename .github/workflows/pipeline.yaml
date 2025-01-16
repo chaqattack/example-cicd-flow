@@ -31,7 +31,8 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          aws-region: us-east-1 
+          aws-region: us-east-1
+          role-to-assume: arn:aws:iam::279787105960:role/github-actions-ecr-role
 
       - name: Build, tag, and push Docker image
         env:
