@@ -37,9 +37,9 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./web-app/Dockerfile web-app
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:$IMAGE_TAG
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:latest
+          docker build -t web-app/python-web:$IMAGE_TAG -f ./web-app/Dockerfile web-app
+        #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:$IMAGE_TAG
+        #docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG:latest
       
 
