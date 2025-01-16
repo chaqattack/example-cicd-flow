@@ -78,7 +78,7 @@ jobs:
           ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
           helm list -n demo-app
-          helm upgrade demo-app --install --set image.repository $ECR_REGISTRY/$ECR_REPOSITORY --set image.tag $IMAGE_TAG  helm-chart/ 
+          helm upgrade demo-app --install --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY --set image.tag=$IMAGE_TAG  helm-chart/ 
 
       
 
