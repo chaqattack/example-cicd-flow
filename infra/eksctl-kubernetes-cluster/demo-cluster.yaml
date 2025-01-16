@@ -19,9 +19,9 @@ managedNodeGroups:
   - name: demo-worker
     instanceTypes: [t3.medium]
     labels: { role: demo-worker }
-    desiredCapacity: 0
+    desiredCapacity: 1
     maxSize: 2
-    minSize: 0
+    minSize: 1
     volumeSize: 20
     privateNetworking: true
     spot: true
