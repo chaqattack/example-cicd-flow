@@ -59,7 +59,8 @@ resource "aws_iam_policy" "ecr_access_policy" {
         "ecr:InitiateLayerUpload",
         "ecr:PutImage",
         "ecr:DescribeRepositories",
-        "ecr:ListImages"
+        "ecr:ListImages",
+        "eks:DescribeCluster"
       ],
       "Resource": "arn:aws:ecr:${var.region}:${data.aws_caller_identity.current.account_id}:repository/my-python-app-repository"
     }
