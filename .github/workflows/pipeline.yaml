@@ -35,5 +35,5 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker build -t web-app:$IMAGE_TAG -f ./web-app/Dockerfile
+          docker build -t web-app:$IMAGE_TAG -f ./web-app/Dockerfile web-app
 
