@@ -20,7 +20,7 @@ spec:
       serviceAccountName: default
       containers:
       - name: web-deployment
-        image: "{{ .Values.api.image.repository }}:{{ .Values.api.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
