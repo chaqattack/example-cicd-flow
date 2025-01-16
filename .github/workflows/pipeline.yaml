@@ -27,12 +27,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Configure AWS credentials using OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::279787105960:role/github-actions-ecr-role
+          aws-region: us-east-1
+
+      # Log in to Amazon ECR
       - name: Log in to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
         with:
-          aws-region: us-east-1
-          role-to-assume: arn:aws:iam::279787105960:role/github-actions-ecr-role
+          mask-password: true
+          registry-type: private
 
       - name: Build, tag, and push Docker image
         env:
