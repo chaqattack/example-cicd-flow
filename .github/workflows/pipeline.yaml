@@ -41,6 +41,18 @@ jobs:
         with:
           mask-password: true
           registry-type: private
+
+      - name: Build, tag, and push Docker image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f ./web-app/Dockerfile web-app
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
   deploy:
     needs: docker-build-and-push
     runs-on: ubuntu-latest
@@ -54,14 +66,21 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-          
+
       - name: eks-kubeconfig
         run: |
           aws eks update-kubeconfig --region us-east-1 --name demo-cluster
         
-      - name: kubectl
+      - name: helm-install
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
         run: |
-          kubectl get ns
+          helm list -n demo-app
+          helm upgrade demo-app --install --set image.repository $ECR_REGISTRY/$ECR_REPOSITORY --set image.tag $IMAGE_TAG  helm-chart/ 
+
+      
 
       
 

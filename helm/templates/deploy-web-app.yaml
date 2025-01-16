@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  web-deployment
+  namespace: demo-app
+  labels:
+    app: web-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-deployment
+  template:
+    metadata:
+      annotations:
+        lastDeploymentAt: {{ now | quote }}  
+      labels:
+        app: web-deployment
+    spec:
+      serviceAccountName: default
+      containers:
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: Always
+        name: web-deployment
+        ports:
+        - containerPort: 8080
+          protocol: TCP
