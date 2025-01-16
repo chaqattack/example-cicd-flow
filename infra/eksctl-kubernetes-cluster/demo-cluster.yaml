@@ -1,0 +1,50 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: demo-cluster
+  region: us-east-1
+
+vpc:
+  subnets:
+    private:
+      us-east-1a: { id: subnet-04b901cdb67a4eb8e }
+      us-east-1b: { id: subnet-0e62c83c508ca0e64 }
+      us-east-1c: { id: subnet-01ac519d39aab9365 }
+    public:
+      us-east-1a: { id: subnet-64b7c23b}
+      us-east-1b: { id: subnet-0f422a69}
+
+managedNodeGroups:
+  - name: demo-worker
+    instanceTypes: [t3.medium]
+    labels: { role: demo-worker }
+    desiredCapacity: 0
+    maxSize: 2
+    minSize: 0
+    volumeSize: 20
+    privateNetworking: true
+    spot: true
+    subnets:
+      - subnet-04b901cdb67a4eb8e 
+      - subnet-0e62c83c508ca0e64 
+      - subnet-01ac519d39aab9365
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        autoScaler: true
+        externalDNS: true
+        certManager: true
+        appMesh: true
+        appMeshPreview: true
+        ebs: true
+        fsx: true
+        efs: true
+        awsLoadBalancerController: true
+        xRay: true
+        cloudWatch: true
+    ssh:
+      publicKeyPath: ~/.ssh/sre-infrastructure.pub
+    tags:
+      nodegroup-type: worker
+      
