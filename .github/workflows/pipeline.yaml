@@ -55,9 +55,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       
+      - name: kubectl-apply
+        uses: actions-hub/kubectl@master
+
       - name: eks-kubeconfig
         run: |
           aws eks update-kubeconfig --region us-east-1 --name demo-cluster
+          kubectl get ns
+        
+        
+
       
 
       
