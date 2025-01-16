@@ -21,7 +21,7 @@ jobs:
           python-version: 3.9
 
   docker-build-and-push:
-    needs: build-and-test
+    needs: prepare
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
